@@ -7,6 +7,8 @@ class OrHub: # на схеме треугольник
         self.alternatives_list=[] #alternative = {new1:old1, ...}
         self.alternatives_exemplars_lists=[]  # у каждой из проверенных альтернатив хранится списко экземпляров
 
+        self.current_down_hub = None
+
     def is_all_alternatives_checked(self):
         if len(self.alternatives_exemplars_lists)!= len(self.alternatives_list):
             return False
@@ -41,9 +43,9 @@ def propagate_into_orhub_from_top(orhub, msg):
     altern_remap = orhub.get_current_alternative()
     first_old_eid = altern_remap[altern_remap.keys()[0]]
     new_bottom_hub = create_hub_by_eid(first_old_eid, top_hub=orhub)
+    orhub.current_down_hub = new_bottom_hub
     msg.eid = back_remap_of_eid(altern_remap, msg.eid)
     return new_bottom_hub, msg
-
 
 def propagate_into_orhub_from_down(orhub, msg):
     orhub.alternatives_exemplars_lists.append(msg.exemplars)
