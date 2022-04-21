@@ -1,0 +1,2 @@
+RARE = 0.1
+SUPER_RARE = 0.001
