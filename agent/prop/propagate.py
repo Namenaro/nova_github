@@ -4,7 +4,7 @@ from agent.prop.orhub import *
 from agent.prop.ihub import *
 from agent.prop.rw import *
 
-def progagate(target, msg):
+def propagate_step(target, msg):
     if type(target) == RemapperWrapper:
         new_target, new_msg = propagate_into_rw(target, msg)
     else:
@@ -13,6 +13,11 @@ def progagate(target, msg):
         else:
             if type(target) == AndHub:
                 new_target, new_msg = propagate_into_andhub(target, msg)
+            else:
+                if type(target) == OrHub:
+                    new_target, new_msg = propagate_into_orhub(target, msg)
+                else:
+                    assert False, "error in prop 2: unknown type of target"
     return new_target, new_msg
 
 
@@ -22,7 +27,7 @@ def make_propagation(eid, points):
     msg = Msg1(eid, points)
     return_hubs = []
     while True:
-        target, msg = progagate(target, msg)
+        target, msg = propagate_step(target, msg)
         if msg is None:
             if len(return_hubs) ==0:
                 break
