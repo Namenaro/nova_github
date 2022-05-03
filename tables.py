@@ -11,3 +11,9 @@ class LongTermMemory:
         # все таблицы из файла загрузить
         pass
 
+
+# основной геттер для таблиц
+def get_program_signature_by_eid(eid):
+    # TODO return exemplar of ORSignature or ISignature or AndSignature
+    return signature
+

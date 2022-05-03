@@ -7,3 +7,6 @@ class Point:
         if other.x == self.x and other.y==self.y:
             return True
         return False
+
+
+

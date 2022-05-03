@@ -1,10 +1,10 @@
-from agent.prop.helpers import *
+from messages import *
 
 class OrHub: # на схеме треугольник
     def __init__(self):
         self.top_node = None
 
-        self.alternatives_list=[] #alternative = {new1:old1, ...}
+        self.alternatives_list=[]  #alternative = {new1:old1, ...}
         self.alternatives_exemplars_lists=[]  # у каждой из проверенных альтернатив хранится списко экземпляров
 
         self.current_down_hub = None
@@ -34,9 +34,9 @@ def back_remap_of_eid(altern_remap, eid):
     assert False, "prop error 3: absent key in remapper of orhub"
 
 def propagate_into_orhub(orhub, msg):
-    if msg.type == FROM_TOP:
+    if msg.type == TYPE_UNSERTAINTY:
         return propagate_into_orhub_from_top(orhub, msg)
-    if msg.type == FROM_DOWN:
+    if msg.type == TYPE_EXEMPLARS:
         return propagate_into_orhub_from_down(orhub, msg)
 
 def propagate_into_orhub_from_top(orhub, msg):

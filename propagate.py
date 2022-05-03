@@ -1,8 +1,7 @@
-from agent.prop.helpers import *
-from agent.prop.andhub import *
-from agent.prop.orhub import *
-from agent.prop.ihub import *
-from agent.prop.rw import *
+from hub_and import *
+from hub_or import *
+from hub_i import *
+from hub_rw import *
 
 def propagate_step(target, msg):
     if type(target) == RemapperWrapper:
@@ -24,15 +23,10 @@ def propagate_step(target, msg):
 def make_propagation(eid, points):
     top_hub = create_hub_by_eid(eid)
     target = top_hub
-    msg = Msg1(eid, points)
-    return_hubs = []
+    msg = MsgUncertainty(eid, points)
+
     while True:
         target, msg = propagate_step(target, msg)
-        if msg is None:
-            if len(return_hubs) ==0:
-                break
-            else:
-                #TODO restart from last return hub
         if target is None:
             break
     return top_hub.exemplars
