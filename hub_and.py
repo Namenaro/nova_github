@@ -36,7 +36,7 @@ class AndHub: # на схеме кружок
 # -  У него всегда два ребенка типа hub_rw.
 # -  У него всегда один родитель (один из списка: None, hub_rw, hub_or)
 
-# - От родителя всегда приходит сообщение типа TYPE_UNSERTAINTY
+# - От родителя всегда приходит сообщение типа TYPE_CONDITION
 # - и перенаправляется без изменений одному из детей (тому, в кого в ремаппере есть нужный eid)
 
 # - От ребенка всегда приходит сообщение типа TYPE_EXEMPLARS, и возможны варианты его обработки:
@@ -51,7 +51,7 @@ class AndHub: # на схеме кружок
 # TYPE_UNSERTAINTY для распространения в него.
 
 def propagate_into_andhub(andhub, msg):
-    if msg.type == TYPE_UNSERTAINTY:
+    if msg.type == TYPE_CONDITION:
         return propagate_into_andhub_from_parent(andhub, msg)
     if msg.type == TYPE_EXEMPLARS:
         return propagate_into_andhub_from_child(andhub, msg)

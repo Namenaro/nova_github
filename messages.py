@@ -1,9 +1,9 @@
-TYPE_UNSERTAINTY = "from_top"
+TYPE_CONDITION = "from_top"
 TYPE_EXEMPLARS = "from_down"
 
 class MsgUncertainty:
     def __init__(self, eid, points):
-        self.type = TYPE_UNSERTAINTY
+        self.type = TYPE_CONDITION
         self.eid = eid
         self.points = points
 

@@ -13,7 +13,7 @@ class RemapperWrapper:  # на схеме прямоугольник с 2 ряд
 
 ##############################################################
 def propagate_into_rw(rw, msg):
-    if msg.type == TYPE_UNSERTAINTY:
+    if msg.type == TYPE_CONDITION:
         return propagate_into_rw_from_top(rw, msg)
     if msg.type == TYPE_EXEMPLARS:
         return propagate_into_rw_from_down(rw, msg)
