@@ -1,7 +1,7 @@
 class IHub: # на схеме обведенный кружочек
-    def __init__(self):
-        self.i_signature=None
-        self.top_node=None  # node = RW or OrHub or None
+    def __init__(self, i_signature, parent):
+        self.i_signature=i_signature
+        self.parent = parent  #  RW or OrHub or None
 
     def run(self, points):
         return new_eid, survived_points

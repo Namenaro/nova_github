@@ -1,4 +1,5 @@
-
+from utils.point import Point
+from prog_exemplar import *
 
 class AndSignature: # коннектор 2 программ действием dx, dy с неопределенностьью dactions
     def __init__(self, name, pre_eid_left, pre_eid_right, dx, dy, dactions, map1, map2):

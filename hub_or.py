@@ -1,10 +1,10 @@
 from messages import *
 
 class OrHub: # на схеме треугольник
-    def __init__(self):
-        self.top_node = None
+    def __init__(self, alternatives_list, parent):
+        self.parent = parent
 
-        self.alternatives_list=[]  #alternative = {new1:old1, ...}
+        self.alternatives_list=alternatives_list  #alternative = {new1:old1, ...}, и вот их таких список []
         self.alternatives_exemplars_lists=[]  # у каждой из проверенных альтернатив хранится списко экземпляров
 
         self.current_down_hub = None
@@ -42,7 +42,7 @@ def propagate_into_orhub(orhub, msg):
 def propagate_into_orhub_from_top(orhub, msg):
     altern_remap = orhub.get_current_alternative()
     first_old_eid = altern_remap[altern_remap.keys()[0]]
-    new_bottom_hub = create_hub_by_eid(first_old_eid, top_hub=orhub)
+    new_bottom_hub = create_hub_by_eid(first_old_eid, orhub)
     orhub.current_down_hub = new_bottom_hub
     msg.eid = back_remap_of_eid(altern_remap, msg.eid)
     return new_bottom_hub, msg
@@ -52,4 +52,4 @@ def propagate_into_orhub_from_down(orhub, msg):
     altern_remap = orhub.get_current_alternative()
     new_exemplars = make_remapping_exemplars(altern_remap, msg.exemplars)
     msg.exemplars = new_exemplars
-    return orhub.top_node, msg
+    return orhub.parent, msg

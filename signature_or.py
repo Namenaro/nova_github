@@ -1,12 +1,5 @@
 class ORSignature: # программа ИЛИ других программ,возможно, многих
     def __init__(self):
         self.name=None
-        self.or_map={} #  {or_eid1:[eid11, eid21,...],
-                       #...,
-                       #or_eidn:[eid1n, eid2n,...]}
+        self.alternatives_list=None # [ {eid1: eid1v1, eid2:eid2v1,...}, {eid1:eid1v2, eid2:eid2v2,...},... ]
 
-    def get_num_alternatives(self):
-        pass
-
-    def get_alternative_mapping_by_index(self, index):
-        pass

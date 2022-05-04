@@ -12,5 +12,8 @@ class MsgExemplars:
         self.type = TYPE_EXEMPLARS
         self.exemplars = exemplars
 
+    def is_failed(self):
+        return len(self.exemplars) == 0
+
 
 
