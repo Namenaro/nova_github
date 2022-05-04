@@ -2,6 +2,7 @@ from hub_and import *
 from hub_or import *
 from hub_i import *
 from hub_rw import *
+from hub_factory import *
 
 def propagate_step(target, msg):
     if type(target) == RemapperWrapper:
@@ -21,7 +22,7 @@ def propagate_step(target, msg):
 
 
 def make_propagation(eid, points):
-    top_hub = create_hub_by_eid(eid)
+    top_hub = create_hub_by_eid(eid, parent=None)
     target = top_hub
     msg = MsgUncertainty(eid, points)
 

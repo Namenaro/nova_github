@@ -1,5 +1,6 @@
 from messages import *
 from hub_factory import *
+from prog_exemplar import *
 
 import copy
 
@@ -81,14 +82,3 @@ def propagate_into_orhub_from_child(orhub, msg):
     return orhub.parent, msg
 
 
-def remap_exemplar_old_to_new(map, exemplar):
-    new_exemplar = {}
-    for new_eid, old_eid in map.items():
-        new_exemplar[new_eid]=exemplar[old_eid]
-    return new_exemplar
-
-def remap_exemplars_old_to_new(map, exemplars):
-    new_exemplars = []
-    for exemplar in exemplars:
-        new_exemplars.append(remap_exemplar_old_to_new(map, exemplar))
-    return new_exemplars
