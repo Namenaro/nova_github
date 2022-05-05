@@ -1,19 +1,41 @@
+import numpy as np
+import torchvision.datasets as datasets
+import matplotlib.pyplot as plt
+import pandas as pd
+import ast
+import itertools
+
+
 class LongTermMemory:
     def __init__(self):
-        # три указателя на будущие таблицы
-        self.ids_table = None
+        self.ids_tab = None
+        self.u_prog_tab = None
+        self.i_prog_tab = None
+        self.or_prog_tab = None
 
-    def save(self, filename):
-        # все таблицы в файл сохранить
-        pass
-
-    def load(self, filename):
-        # все таблицы из файла загрузить
-        pass
+        self.load_tables_from_file(path='./tables.xlsx')
 
 
-# основной геттер для таблиц
-def get_program_signature_by_eid(eid):
-    # TODO return exemplar of ORSignature or ISignature or AndSignature
-    return signature
+    def load_tables_from_file(self, path='./tables.xlsx'):
+        self.ids_tab = pd.read_excel(path, sheet_name='ids_table')
+        self.u_prog_tab = pd.read_excel(path, sheet_name='u_progs_table')
+        self.i_prog_tab = pd.read_excel(path, sheet_name='i_progs_table')
+        self.or_prog_tab = pd.read_excel(path, sheet_name='or_progs_table')
+
+    def get_program_signature_by_eid(self, eid):
+        # получим имя программы-источника этого события
+        program_name =
+
+        # извлечем всю информацию об этой программы в объект сигнатуры
+        # поиск будем производить по имени программы по трем таблицам
+        u_progs_res = self.u_progs.loc[self.u_prog_tab['pr_name'] == program_name]
+
+
+
+        return signature
+
+
+def convert(cell):
+    res = ast.literal_eval(cell)
+    return res
 
