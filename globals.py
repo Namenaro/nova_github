@@ -2,3 +2,5 @@ RARE = 0.1
 SUPER_RARE = 0.001
 
 PIC = None
+
+LTM = None

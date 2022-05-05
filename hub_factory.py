@@ -1,14 +1,14 @@
 from signature_and import *
 from signature_or import *
 from signature_i import *
-
+from globals import *
 from hub_i import *
 from hub_and import *
 from hub_or import *
 from hub_rw import *
 
 def create_hub_by_eid(eid, parent):
-    signature = get_program_signature_by_eid(eid)
+    signature = LTM.get_program_signature_by_eid(eid)
     if type(signature) == AndSignature:
         hub = AndHub(signature, parent)
         # и сразу создаем 2 rw-детей ему
