@@ -26,6 +26,6 @@ PIC = get_numbers_of_type(3)[0]
 ltm = LongTermMemory()
 points = [Point(4,5), Point(4,6)]
 exemplars = make_propagation(eid=4, points = points)
-print (exemplars)
+print(exemplars)
 
 
