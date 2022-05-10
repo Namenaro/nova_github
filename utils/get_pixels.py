@@ -9,10 +9,13 @@ def sense(picture, point):
     xlen=28
     ylen=28
     if point.x >= 0 and point.y >= 0 and point.x < xlen and point.y < ylen:
-        if picture[point.y, point.x] >=10:
+        val = picture[point.y, point.x]
+        if  val >=10:
             return 1
-    else:
-        return 0
+        else:
+            return 0
+
+    return 0
 
 
 def get_coords_for_radius(centerx, centery, radius):
