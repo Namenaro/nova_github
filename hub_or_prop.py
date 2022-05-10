@@ -1,28 +1,9 @@
 from messages import *
 from hub_factory import *
 from prog_exemplar import *
+from globals import *
 
 import copy
-
-class OrHub: # на схеме треугольник
-    def __init__(self, alternatives_list, parent):
-        self.parent = parent
-        self.alternatives_list=alternatives_list  #alternative = {new1:old1, ...}, и вот их таких список []
-        self.child = None
-        self.last_condition_msg = None
-
-    def is_all_alternatives_checked(self):
-        if len(self.alternatives_list)>0:
-            return False
-        return True
-
-    def remove_current_alternative(self):
-        del self.child
-        self.child = None
-        self.alternatives_list.pop(0) # удаляем первый элемент списка
-
-    def get_actual_alternative(self):
-        return self.alternatives_list[0]
 
 
 #### Логика распространения сообщений через этот узел ###########

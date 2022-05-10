@@ -1,15 +1,6 @@
 from prog_exemplar import *
 from messages import *
-
-class IHub: # на схеме обведенный кружочек
-    def __init__(self, i_signature, parent):
-        self.i_signature=i_signature
-        self.parent = parent  #  RW or OrHub or None
-
-    def run(self, points):
-        new_eid = self.i_signature.new_eid
-        survived_points = self.i_signature.run(points)
-        return new_eid, survived_points
+from globals import *
 
 
 #### Логика распространения сообщений через этот узел ###########
@@ -27,7 +18,7 @@ def points_to_exemplars(eid, points):
 
 def propagate_into_ihub(ihub, msg):
     assert msg.type == TYPE_CONDITION, "ERR: wrong type of msg into IHub"
-    new_eid, survived_points = ihub.run(msg.points)
+    new_eid, survived_points = ihub.run(msg.points,pic=globs.pic)
     exemplars = points_to_exemplars(new_eid, survived_points)
     msg = MsgExemplars(exemplars)
     return ihub.parent, msg

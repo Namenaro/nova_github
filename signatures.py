@@ -1,5 +1,26 @@
-from utils.point import Point
+from utils.get_pixels import sense
 from prog_exemplar import *
+
+class ORSignature: # программа ИЛИ других программ,возможно, многих
+    def __init__(self, name, alternatives_list):
+        self.name = name
+        self.alternatives_list = alternatives_list # [ {eid1: eid1v1, eid2:eid2v1,...}, {eid1:eid1v2, eid2:eid2v2,...},... ]
+
+
+class ISignature: # идентифицирующий
+    def __init__(self, name, old_eid,new_eid, steps):
+        self.name=name
+        self.old_eid=old_eid
+        self.new_eid=new_eid
+        self.steps=steps
+
+    def run(self, points, pic):
+        survived_points = []
+        for point in points:
+            if sense(picture=pic, point=point) == 1:
+               survived_points.append(point)
+        return survived_points
+
 
 class AndSignature: # коннектор 2 программ действием dx, dy с неопределенностьью dactions
     def __init__(self, name, pre_eid_left, pre_eid_right, dx, dy, dactions, map1, map2):

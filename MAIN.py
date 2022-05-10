@@ -1,7 +1,4 @@
-
-
-from propagate import *
-
+from propagator import *
 import matplotlib.pyplot as plt
 
 def show_hardcoded_examples():
@@ -21,8 +18,9 @@ def show_hardcoded_examples():
     yellows = [img[21][14], img[18][17]]
 
 
-points = [Point(4,5), Point(4,6)]
-exemplars = make_propagation(eid=4, points=points)
+show_hardcoded_examples()
+points = [Point(15, 17), Point(13, 12)]
+exemplars = make_propagation(eid=2, points=points)
 print(exemplars)
 
 

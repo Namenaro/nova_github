@@ -1,3 +1,4 @@
+
 TYPE_CONDITION = "from_top"
 TYPE_EXEMPLARS = "from_down"
 

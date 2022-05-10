@@ -9,7 +9,8 @@ def sense(picture, point):
     xlen=28
     ylen=28
     if point.x >= 0 and point.y >= 0 and point.x < xlen and point.y < ylen:
-        return picture[point.y, point.x]
+        if picture[point.y, point.x] >=10:
+            return 1
     else:
         return 0
 

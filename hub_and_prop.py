@@ -1,36 +1,7 @@
 from messages import *
 from prog_exemplar import *
-from signature_and import *
-from tables import *
-
-class AndHub: # на схеме кружок
-    def __init__(self, and_signature, parent):
-        self.and_signature=and_signature
-
-        self.leftRW=None
-        self.rightRW=None
-
-        self.parent=parent  # либо OrHub либо RemapperWrapper
-
-        self.left_pre_exemplars =[]
-        self.right_pre_exemplars=[]
-
-        self.current_RW_is_left = True
 
 
-    def is_runnable(self):
-        if len(self.left_pre_exemplars) != 0 and len(self.right_pre_exemplars) != 0:
-            return True
-        return False
-
-    def run(self):
-        new_exemplars = []
-        for pre_left in self.left_pre_exemplars:
-            for pre_right in self.right_pre_exemplars:
-                new_exemplar = self.and_signature.run(pre_left, pre_right)
-                if new_exemplar is not {}:
-                    new_exemplars.append(new_exemplar)
-        return new_exemplars
 
 #### Логика распространения сообщений через этот узел ###########
 # -  У него всегда два ребенка типа hub_rw.

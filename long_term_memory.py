@@ -1,6 +1,4 @@
-from signature_or import *
-from signature_i import *
-from signature_and import *
+from signatures import *
 
 import torchvision.datasets as datasets
 import matplotlib.pyplot as plt
