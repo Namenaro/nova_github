@@ -43,8 +43,8 @@ class AndSignature: # коннектор 2 программ действием d
         return abs_actions_set
 
     def run(self, pre_left_exemplar, pre_right_exemplar):
-        left_coord = pre_left_exemplar[self.pre_eid_left]
-        right_coord = pre_right_exemplar[self.pre_eid_right]
+        left_coord = pre_left_exemplar.events_exemplars[self.pre_eid_left]
+        right_coord = pre_right_exemplar.events_exemplars[self.pre_eid_right]
         abs_center_of_right_compact = Point(x=left_coord.x + self.dx, y=left_coord.y+self.dy )
         possible_varians_of_right = self.actions_set_to_abs_coords(abs_center_of_right_compact)
 
@@ -52,11 +52,11 @@ class AndSignature: # коннектор 2 программ действием d
         if right_coord in possible_varians_of_right:
             # переименование точек левого контекста
             for new_eid, old_eid in self.map1.items():
-                events_exemplars[new_eid]=pre_left_exemplar[old_eid]
+                events_exemplars[new_eid]=pre_left_exemplar.events_exemplars[old_eid]
 
             # переименование точек правого контекста
             for new_eid, old_eid in self.map2.items():
-                events_exemplars[new_eid]=pre_right_exemplar[old_eid]
+                events_exemplars[new_eid]=pre_right_exemplar.events_exemplars[old_eid]
         result_exemplar = ProgExemplar(events_exemplars)
         return result_exemplar
 
@@ -65,7 +65,7 @@ class AndSignature: # коннектор 2 программ действием d
         # теоретико-множественное ИЛИ между всеми правыми облаками для данного множества левых точек
         for left_abs_point in left_abs_points:
             right_abs_point = Point(x=left_abs_point.x+self.dx, y=left_abs_point.y+self.dy)
-            right_abs_set = self.actions_set_to_abs_coords(self, right_abs_point)
+            right_abs_set = self.actions_set_to_abs_coords( right_abs_point)
             for p in right_abs_set:
                 result.add(p)
         return result
@@ -86,3 +86,15 @@ class AndSignature: # коннектор 2 программ действием d
             left_y = right_abs_point.y - daction.y - self.dy
             result.append(Point(x=left_x, y=left_y))
         return result
+
+    def get_new_eid_left(self):
+        for new_eid, old_eid in self.map1.items():
+            if old_eid == self.pre_eid_left:
+                return new_eid
+        assert "Err: no left eid found in and_signa"
+
+    def get_new_eid_right(self):
+        for new_eid, old_eid in self.map2.items():
+            if old_eid == self.pre_eid_right:
+                return new_eid
+        assert "Err: no right eid found in and_signa"

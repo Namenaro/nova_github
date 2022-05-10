@@ -19,7 +19,7 @@ def show_hardcoded_examples():
 
 
 show_hardcoded_examples()
-points = [Point(13, 15), Point(12,17)]
+points = [Point(13, 15)]
 exemplars = make_propagation(eid=2, points=points)
 print(exemplars)
 

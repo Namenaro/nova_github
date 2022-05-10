@@ -14,7 +14,7 @@ from prog_exemplar import *
 
 # Cообщение от ребенка всегда типа TYPE_EXEMPLARS. Если оно пустое,
 # то ребенка уничтожить, и переслать пустое сообщение своему родителю.
-# Если не пустое, то сделать ему ремаппинг от старого к новому и отпавить родителю.
+# Если не пустое, просто отпавить родителю.
 
 def propagate_into_rw(rw_hub, msg):
     if msg.type == TYPE_CONDITION:
@@ -32,11 +32,7 @@ def propagate_into_rw_from_parent(rw_hub, msg):
 def propagate_into_rw_from_child(rw_hub, msg):
     if msg.is_failed():
         del rw_hub.child
-        return rw_hub.parent, msg
-    #Если не пустое, то сделать ему ремаппинг от старого к новому и отпавить родителю
-
-    mapped_exemplars = remap_exemplars_old_to_new(rw_hub.eid_map, msg.exemplars)
-    msg.exemplars = mapped_exemplars
     return rw_hub.parent, msg
+
 
 

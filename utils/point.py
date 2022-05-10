@@ -8,5 +8,11 @@ class Point:
             return True
         return False
 
+    def __str__(self):
+        return str(self.x) + str(self.y)
+
+    def __hash__(self):
+        return hash(str(self))
+
 
 

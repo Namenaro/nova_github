@@ -40,7 +40,11 @@ class LongTermMemory:
             u = convert_from_str(rows.iloc[0]["u"])
             dy = u[1]
             dx = u[0]
-            dactions = convert_from_str("[" + rows.iloc[0]["area"] + "]")
+            dactions_list = convert_from_str("[" + rows.iloc[0]["area"] + "]")
+            dactions = []
+            for xy in dactions_list:
+                dactions.append(Point(xy[0], xy[1]))
+
             mapper1 =convert_from_str("[" + rows.iloc[0]["map_1"] + "]")
             map1 = {}
             for old_new in mapper1:

@@ -54,7 +54,7 @@ def propagate_into_andhub_from_child(andhub, msg):
     if andhub.is_runnable(): # вверх
         exemplars = andhub.run()
         msg.exemplars = exemplars
-        return andhub.top_receiver, msg
+        return andhub.parent, msg
     else: # случай, когда на одном ребенке экземпляры есть, а на другом нет
         if andhub.current_RW_is_left == True:
             #если пришло слева, то оправляем вправо
@@ -71,13 +71,15 @@ def propagate_into_andhub_from_child(andhub, msg):
 def create_msg_to_left(and_signature, exemplars_from_right):
     right_points = extract_cloud_from_exemplars_list_by_eid(and_signature.pre_eid_right, exemplars_from_right)
     left_points = and_signature.get_left_cloud_by_right_cloud(right_points)
-    msg_to_left = MsgUncertainty(and_signature.pre_eid_left, list(left_points))
+    new_left_eid = and_signature.get_new_eid_left()
+    msg_to_left = MsgUncertainty(new_left_eid, list(left_points))
     return msg_to_left
 
 def create_msg_to_right(and_signature, exemplars_from_left):
     left_points = extract_cloud_from_exemplars_list_by_eid(and_signature.pre_eid_left, exemplars_from_left)
     right_points = and_signature.get_right_cloud_by_left_cloud(left_points)
-    msg_to_right = MsgUncertainty(and_signature.pre_eid_right, list(right_points))
+    new_right_eid = and_signature.get_new_eid_right()
+    msg_to_right = MsgUncertainty(new_right_eid, list(right_points))
     return msg_to_right
 
 
