@@ -8,7 +8,8 @@ from hub_or import *
 from hub_rw import *
 
 def create_hub_by_eid(eid, parent):
-    signature = LTM.get_program_signature_by_eid(eid)
+    print("create hub")
+    signature = globals.ltm.get_program_signature_by_eid(eid)
     if type(signature) == AndSignature:
         hub = AndHub(signature, parent)
         # и сразу создаем 2 rw-детей ему

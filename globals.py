@@ -1,6 +1,11 @@
-RARE = 0.1
-SUPER_RARE = 0.001
+from utils.get_pictures import *
+from tables import *
 
-PIC = None
+class Globals:
+    def __init__(self):
+        self.pic = get_numbers_of_type(3)[0]
+        self.ltm = LongTermMemory()
 
-LTM = None
+globals = Globals()
+
+

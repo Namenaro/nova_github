@@ -1,6 +1,5 @@
-from globals import *
-from utils.get_pictures import *
-from tables import *
+
+
 from propagate import *
 
 import matplotlib.pyplot as plt
@@ -22,10 +21,8 @@ def show_hardcoded_examples():
     yellows = [img[21][14], img[18][17]]
 
 
-PIC = get_numbers_of_type(3)[0]
-LTM = LongTermMemory()
 points = [Point(4,5), Point(4,6)]
-exemplars = make_propagation(eid=4, points = points)
+exemplars = make_propagation(eid=4, points=points)
 print(exemplars)
 
 

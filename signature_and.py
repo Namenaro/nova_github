@@ -12,6 +12,7 @@ class AndSignature: # коннектор 2 программ действием d
         self.map1=map1#{some_new_eid1:some_old1, some_new_eid2:some_old2...}
         self.map2=map2 #{...}
 
+
     def actions_set_to_abs_coords(self,  abs_center):
         abs_actions_set = []
         for daction in self.dactions:
