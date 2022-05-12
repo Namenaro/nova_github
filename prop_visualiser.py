@@ -29,7 +29,7 @@ class PropVisualiser:
             color = self._get_random_color()
             self._draw_eids_points(example.events_exemplars, color, ax)
 
-    def and_hub_register_run(self, ID, left_pre_exemplars, right_pre_exemplars, exemplars):
+    def EVENT_and_hub_run(self, ID, left_pre_exemplars, right_pre_exemplars, exemplars):
         self.logger.add_text("AND-hub RUNNED: " +str(ID))
         pic = globs.pic
         fig, axs = plt.subplots(ncols=3,figsize=(18, 6), dpi=80)
