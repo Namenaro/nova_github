@@ -1,6 +1,7 @@
 
 class RemapperWrapper:  # на схеме прямоугольник с 2 рядами цифр
-    def __init__(self, map, parent):
+    def __init__(self,ID, map, parent):
+        self.ID = ID
         self.eid_map = map # {new_eid1: old_eid1, new_eid2:old_eid2,...}
         self.parent = parent
         self.child = None
@@ -11,7 +12,8 @@ class RemapperWrapper:  # на схеме прямоугольник с 2 ряд
 
 
 class OrHub: # на схеме треугольник
-    def __init__(self, alternatives_list, parent):
+    def __init__(self, ID, alternatives_list, parent):
+        self.ID = ID
         self.parent = parent
         self.alternatives_list=alternatives_list  #alternative = {new1:old1, ...}, и вот их таких список []
         self.child = None
@@ -32,7 +34,8 @@ class OrHub: # на схеме треугольник
 
 
 class IHub: # на схеме обведенный кружочек
-    def __init__(self, i_signature, parent):
+    def __init__(self,ID,  i_signature, parent):
+        self.ID = ID
         self.i_signature=i_signature
         self.parent = parent  #  RW or OrHub or None
 
@@ -43,7 +46,8 @@ class IHub: # на схеме обведенный кружочек
 
 
 class AndHub: # на схеме кружок
-    def __init__(self, and_signature, parent):
+    def __init__(self, ID, and_signature, parent):
+        self.ID = ID
         self.and_signature=and_signature
 
         self.leftRW=None

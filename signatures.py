@@ -43,6 +43,9 @@ class AndSignature: # коннектор 2 программ действием d
         return abs_actions_set
 
     def run(self, pre_left_exemplar, pre_right_exemplar):
+        print(self.__dict__)
+        print ("pre_left=" + str(pre_left_exemplar.__dict__))
+        print("pre_right=" + str(pre_right_exemplar.__dict__))
         left_coord = pre_left_exemplar.events_exemplars[self.pre_eid_left]
         right_coord = pre_right_exemplar.events_exemplars[self.pre_eid_right]
         abs_center_of_right_compact = Point(x=left_coord.x + self.dx, y=left_coord.y+self.dy )
