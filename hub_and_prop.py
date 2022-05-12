@@ -26,6 +26,7 @@ def propagate_into_andhub(andhub, msg):
         VIS.EVENT_and_hub_received_incertainty_msg(andhub.ID, msg)
         return propagate_into_andhub_from_parent(andhub, msg)
     if msg.type == TYPE_EXEMPLARS:
+        VIS.EVENT_and_hub_received_exemplars_msg(andhub.ID, andhub.current_RW_is_left, msg)
         return propagate_into_andhub_from_child(andhub, msg)
 
 def propagate_into_andhub_from_parent(andhub, msg):
@@ -47,6 +48,7 @@ def propagate_into_andhub_from_child(andhub, msg):
         del andhub.rightRW
         andhub.leftRW = None
         andhub.rightRW = None
+        VIS.EVENT_and_hub_failed(andhub.ID)
         return andhub.parent, msg
 
     if andhub.current_RW_is_left == True:

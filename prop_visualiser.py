@@ -59,5 +59,19 @@ class PropVisualiser:
             axs.scatter(point.x, point.y, marker=strmarker, color='skyblue',s=100)
         self.logger.add_fig(fig)
 
+    def EVENT_and_hub_received_exemplars_msg(self, ID, from_left_child, msg):
+        source = "from left"
+        if from_left_child is False:
+            source = "from right"
+        self.logger.add_text("AND-hub obtained exemplars msg: " + str(ID) + ", " + source)
+        pic = globs.pic
+        fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
+        axs.imshow(pic, cmap='gray_r')
+        self._draw_many_prog_examples(msg.exemplars, axs)
+        self.logger.add_fig(fig)
+
+    def EVENT_and_hub_failed(self, ID):
+        self.logger.add_text("AND-hub failed: " + str(ID))
+
 VIS = PropVisualiser()
 
