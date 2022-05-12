@@ -1,6 +1,6 @@
 from messages import *
 from prog_exemplar import *
-
+from prop_visualiser import VIS
 
 
 #### Логика распространения сообщений через этот узел ###########
@@ -44,6 +44,8 @@ def propagate_into_andhub_from_child(andhub, msg):
        # удаляем детей и шлем сигнал о своем провале родителю
         del andhub.leftRW
         del andhub.rightRW
+        andhub.leftRW = None
+        andhub.rightRW = None
         return andhub.parent, msg
 
     if andhub.current_RW_is_left == True:
@@ -53,6 +55,7 @@ def propagate_into_andhub_from_child(andhub, msg):
 
     if andhub.is_runnable(): # вверх
         exemplars = andhub.run()
+        VIS.and_hub_register_run(andhub.ID, andhub.left_pre_exemplars, andhub.right_pre_exemplars, exemplars)
         msg.exemplars = exemplars
         return andhub.parent, msg
     else: # случай, когда на одном ребенке экземпляры есть, а на другом нет

@@ -1,6 +1,6 @@
 from propagator import *
 import matplotlib.pyplot as plt
-from prop_visualiser import pr_vis
+from prop_visualiser import VIS
 
 def show_hardcoded_examples():
     x = get_numbers_of_type(3)
@@ -20,8 +20,8 @@ def show_hardcoded_examples():
 
 
 show_hardcoded_examples()
-points = [Point(13, 15)]
+points = [Point(13, 15), Point(14, 15)]
 exemplars = make_propagation(eid=2, points=points)
 print(exemplars)
 
-pr_vis.close()
+VIS.close()

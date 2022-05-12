@@ -1,7 +1,10 @@
 from utils.logger import HtmlLogger
+from prog_exemplar import ProgExemplar
+from globals import globs
 
 import numpy as np
 import matplotlib.pyplot as plt
+
 
 class PropVisualiser:
     def __init__(self):
@@ -17,19 +20,33 @@ class PropVisualiser:
             strmarker = '$' + str(eid) + '$'
             ax.scatter(point.x, point.y, s=100, c=[color], marker=strmarker, alpha=0.9)
 
-    def _before_after(self, pic, eids_points_before, eids_points_after):
-        fig, axs = plt.subplots(ncols=2)
+    def _get_random_color(self):
+        color = np.random.rand(3,)
+        return color
+
+    def _draw_many_prog_examples(self, examples, ax):
+        for example in examples:
+            color = self._get_random_color()
+            self._draw_eids_points(example.events_exemplars, color, ax)
+
+    def and_hub_register_run(self, ID, left_pre_exemplars, right_pre_exemplars, exemplars):
+        self.logger.add_text("AND-hub RUNNED: " +str(ID))
+        pic = globs.pic
+        fig, axs = plt.subplots(ncols=3,figsize=(18, 6), dpi=80)
         axs[0].imshow(pic, cmap='gray_r')
-        axs[0].set_title('before')
-        axs[0].imshow(pic, cmap='gray_r')
-        self._draw_eids_points(eids_points_before, 'skyblue', axs[0])
+        axs[0].set_title('left pre_exemplars:')
+        self._draw_many_prog_examples(left_pre_exemplars, axs[0])
 
         axs[1].imshow(pic, cmap='gray_r')
-        axs[1].set_title('after')
-        axs[1].imshow(pic, cmap='gray_r')
-        self._draw_eids_points(eids_points_after, 'red', axs[1])
-        return fig
+        axs[1].set_title('right pre_exemplars:')
+        self._draw_many_prog_examples(right_pre_exemplars, axs[1])
+
+        axs[2].imshow(pic, cmap='gray_r')
+        axs[2].set_title('survived exemplars:')
+        self._draw_many_prog_examples(exemplars, axs[2])
+
+        self.logger.add_fig(fig)
 
 
-pr_vis = PropVisualiser()
+VIS = PropVisualiser()
 
