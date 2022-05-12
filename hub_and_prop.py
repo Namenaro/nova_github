@@ -23,6 +23,7 @@ from prop_visualiser import VIS
 
 def propagate_into_andhub(andhub, msg):
     if msg.type == TYPE_CONDITION:
+        VIS.EVENT_and_hub_received_incertainty_msg(andhub.ID, msg)
         return propagate_into_andhub_from_parent(andhub, msg)
     if msg.type == TYPE_EXEMPLARS:
         return propagate_into_andhub_from_child(andhub, msg)
@@ -55,31 +56,31 @@ def propagate_into_andhub_from_child(andhub, msg):
 
     if andhub.is_runnable(): # вверх
         exemplars = andhub.run()
-        VIS.EVENT_and_hub_run(andhub.ID, andhub.left_pre_exemplars, andhub.right_pre_exemplars, exemplars)
         msg.exemplars = exemplars
+        VIS.EVENT_and_hub_run(andhub.ID, andhub.left_pre_exemplars, andhub.right_pre_exemplars, exemplars)
         return andhub.parent, msg
     else: # случай, когда на одном ребенке экземпляры есть, а на другом нет
         if andhub.current_RW_is_left == True:
             #если пришло слева, то оправляем вправо
             andhub.current_RW_is_left = False
-            msg_to_right = create_msg_to_right(andhub.and_signature, exemplars_from_left=msg.exemplars)
+            msg_to_right = create_msg_to_right(andhub.and_signature, pre_exemplars_from_left=msg.exemplars)
             return andhub.rightRW, msg_to_right
         else:
             # если пришло справа, то оправляем влево
             andhub.current_RW_is_left = True
-            msg_to_left = create_msg_to_left(andhub.and_signature, exemplars_from_right=msg.exemplars)
+            msg_to_left = create_msg_to_left(andhub.and_signature, pre_exemplars_from_right=msg.exemplars)
             return andhub.leftRW, msg_to_left
 
 
-def create_msg_to_left(and_signature, exemplars_from_right):
-    right_points = extract_cloud_from_exemplars_list_by_eid(and_signature.pre_eid_right, exemplars_from_right)
+def create_msg_to_left(and_signature, pre_exemplars_from_right):
+    right_points = extract_cloud_from_exemplars_list_by_eid(and_signature.pre_eid_right, pre_exemplars_from_right)
     left_points = and_signature.get_left_cloud_by_right_cloud(right_points)
     new_left_eid = and_signature.get_new_eid_left()
     msg_to_left = MsgUncertainty(new_left_eid, list(left_points))
     return msg_to_left
 
-def create_msg_to_right(and_signature, exemplars_from_left):
-    left_points = extract_cloud_from_exemplars_list_by_eid(and_signature.pre_eid_left, exemplars_from_left)
+def create_msg_to_right(and_signature, pre_exemplars_from_left):
+    left_points = extract_cloud_from_exemplars_list_by_eid(and_signature.pre_eid_left, pre_exemplars_from_left)
     right_points = and_signature.get_right_cloud_by_left_cloud(left_points)
     new_right_eid = and_signature.get_new_eid_right()
     msg_to_right = MsgUncertainty(new_right_eid, list(right_points))

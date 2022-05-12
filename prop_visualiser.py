@@ -1,6 +1,7 @@
 from utils.logger import HtmlLogger
 from prog_exemplar import ProgExemplar
 from globals import globs
+from messages import MsgExemplars, MsgUncertainty
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -47,6 +48,16 @@ class PropVisualiser:
 
         self.logger.add_fig(fig)
 
+    def EVENT_and_hub_received_incertainty_msg(self, ID, msg):
+        self.logger.add_text("AND-hub obtained uncert msg: " + str(ID))
+        pic = globs.pic
+        fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
+        axs.imshow(pic, cmap='gray_r')
+        axs.set_title('uncert:')
+        strmarker = '$' + str(msg.eid) + '$'
+        for point in msg.points:
+            axs.scatter(point.x, point.y, marker=strmarker, color='skyblue',s=100)
+        self.logger.add_fig(fig)
 
 VIS = PropVisualiser()
 
