@@ -1,9 +1,7 @@
 from messages import *
 from hub_factory import *
 from prog_exemplar import *
-
-
-
+from prop_visualiser import VIS
 
 #### Логика распространения сообщений через этот узел ###########
 # Его родитель всегда это and_hub
@@ -27,11 +25,14 @@ def propagate_into_rw_from_parent(rw_hub, msg):
     msg.eid = old_eid
     if rw_hub.child is None:
         rw_hub.child = create_hub_by_eid(old_eid, parent=rw_hub)
+    VIS.EVENT_rw_hub_sent_uncertainty_to_child(ID=rw_hub.ID, uncert_msg=msg)
     return rw_hub.child, msg
 
 def propagate_into_rw_from_child(rw_hub, msg):
     if msg.is_failed():
+        VIS.EVENT_rw_hub_failed(rw_hub.ID)
         del rw_hub.child
+    VIS.EVENT_rw_hub_obtained_exemplars_from_child(rw_hub.ID, msg)
     return rw_hub.parent, msg
 
 

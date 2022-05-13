@@ -1,3 +1,4 @@
+from prop_visualiser import VIS
 
 class RemapperWrapper:  # на схеме прямоугольник с 2 рядами цифр
     def __init__(self,ID, map, parent):
@@ -5,6 +6,13 @@ class RemapperWrapper:  # на схеме прямоугольник с 2 ряд
         self.eid_map = map # {new_eid1: old_eid1, new_eid2:old_eid2,...}
         self.parent = parent
         self.child = None
+
+
+        if parent == None:
+            parent_ID = "no id!"
+        else:
+            parent_ID = parent.ID
+        VIS.EVENT_attached_new_hub(hub_type_str="RW", ID=self.ID, parent_ID=parent_ID)
 
     def get_old_eid_by_new(self, new_eid):
         return self.eid_map[new_eid]
@@ -18,6 +26,12 @@ class OrHub: # на схеме треугольник
         self.alternatives_list=alternatives_list  #alternative = {new1:old1, ...}, и вот их таких список []
         self.child = None
         self.last_condition_msg = None
+
+        if parent == None:
+            parent_ID = "no id!"
+        else:
+            parent_ID = parent.ID
+        VIS.EVENT_attached_new_hub(hub_type_str="OR", ID=self.ID, parent_ID=parent_ID)
 
     def is_all_alternatives_checked(self):
         if len(self.alternatives_list)>0:
@@ -38,6 +52,12 @@ class IHub: # на схеме обведенный кружочек
         self.ID = ID
         self.i_signature=i_signature
         self.parent = parent  #  RW or OrHub or None
+
+        if parent == None:
+            parent_ID = "no id!"
+        else:
+            parent_ID = parent.ID
+        VIS.EVENT_attached_new_hub(hub_type_str="I", ID=self.ID, parent_ID=parent_ID)
 
     def run(self, points, pic):
         new_eid = self.i_signature.new_eid
@@ -60,6 +80,12 @@ class AndHub: # на схеме кружок
 
         self.current_RW_is_left = True
 
+        if parent == None:
+            parent_ID = "no id!"
+        else:
+            parent_ID = parent.ID
+        VIS.EVENT_attached_new_hub(hub_type_str="AND", ID=self.ID, parent_ID=parent_ID)
+
 
     def is_runnable(self):
         if len(self.left_pre_exemplars) != 0 and len(self.right_pre_exemplars) != 0:
@@ -71,6 +97,6 @@ class AndHub: # на схеме кружок
         for pre_left in self.left_pre_exemplars:
             for pre_right in self.right_pre_exemplars:
                 new_exemplar = self.and_signature.run(pre_left, pre_right)
-                if new_exemplar is not {}:
+                if new_exemplar is not None:
                     new_exemplars.append(new_exemplar)
         return new_exemplars

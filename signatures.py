@@ -51,8 +51,9 @@ class AndSignature: # коннектор 2 программ действием d
         abs_center_of_right_compact = Point(x=left_coord.x + self.dx, y=left_coord.y+self.dy )
         possible_varians_of_right = self.actions_set_to_abs_coords(abs_center_of_right_compact)
 
-        events_exemplars = {}
+
         if right_coord in possible_varians_of_right:
+            events_exemplars = {}
             # переименование точек левого контекста
             for new_eid, old_eid in self.map1.items():
                 events_exemplars[new_eid]=pre_left_exemplar.events_exemplars[old_eid]
@@ -60,8 +61,9 @@ class AndSignature: # коннектор 2 программ действием d
             # переименование точек правого контекста
             for new_eid, old_eid in self.map2.items():
                 events_exemplars[new_eid]=pre_right_exemplar.events_exemplars[old_eid]
-        result_exemplar = ProgExemplar(events_exemplars)
-        return result_exemplar
+            result_exemplar = ProgExemplar(events_exemplars)
+            return result_exemplar
+        return None
 
     def get_right_cloud_by_left_cloud(self, left_abs_points):
         result = set()

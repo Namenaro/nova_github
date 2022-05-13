@@ -18,10 +18,19 @@ def show_hardcoded_examples():
     greens = [img[22][14], img[20][16], img[18][18]]
     yellows = [img[21][14], img[18][17]]
 
+def exp():
+    #show_hardcoded_examples()
+    points = [Point(13, 15), Point(14, 15)]
+    exemplars = make_propagation(eid=6, points=points)
+    print(exemplars)
+    VIS.close()
 
-show_hardcoded_examples()
-points = [Point(13, 15), Point(14, 15)]
-exemplars = make_propagation(eid=2, points=points)
-print(exemplars)
+def exp1():
+    try:
+        exp()
+    except:
+        VIS.close()
 
-VIS.close()
+exp()
+
+

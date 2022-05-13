@@ -1,6 +1,7 @@
 from prog_exemplar import *
 from messages import *
 from globals import *
+from prop_visualiser import VIS
 
 
 #### Логика распространения сообщений через этот узел ###########
@@ -20,5 +21,6 @@ def propagate_into_ihub(ihub, msg):
     assert msg.type == TYPE_CONDITION, "ERR: wrong type of msg into IHub"
     new_eid, survived_points = ihub.run(msg.points,pic=globs.pic)
     exemplars = points_to_exemplars(new_eid, survived_points)
-    msg = MsgExemplars(exemplars)
-    return ihub.parent, msg
+    msg1 = MsgExemplars(exemplars)
+    VIS.EVENT_i_hub_run(ID=ihub.ID, uncertainty_msg=msg, exemplars_msg=msg1)
+    return ihub.parent, msg1

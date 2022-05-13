@@ -34,13 +34,19 @@ class PropVisualiser:
         color = np.random.rand(3,)
         return color
 
+    def _draw_uncert_msg(self, uncert_msg, ax):
+        strmarker = '$' + str(uncert_msg.eid) + '$'
+        for point in uncert_msg.points:
+            ax.scatter(point.x, point.y, marker=strmarker, color='skyblue', s=100)
+
     def _draw_many_prog_examples(self, examples, ax):
         for example in examples:
             color = self._get_random_color()
             self._draw_eids_points(example.events_exemplars, color, ax)
 
-    def EVENT_and_hub_run(self, ID, left_pre_exemplars, right_pre_exemplars, exemplars):
-        self.logger.add_text("AND-hub RUNNED: " +str(ID))
+######## EVENTS OF AND HUB #########################################
+    def EVENT_and_hub_run(self, ID, siganture_name, left_pre_exemplars, right_pre_exemplars, exemplars):
+        self.logger.add_text("AND-hub RUNNED: " +str(ID) + " , signature: " + str(siganture_name))
         pic = globs.pic
         fig, axs = plt.subplots(ncols=3,figsize=(18, 6), dpi=80)
         axs[0].imshow(pic, cmap='gray_r')
@@ -63,9 +69,7 @@ class PropVisualiser:
         fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
         axs.imshow(pic, cmap='gray_r')
         axs.set_title('uncert:')
-        strmarker = '$' + str(msg.eid) + '$'
-        for point in msg.points:
-            axs.scatter(point.x, point.y, marker=strmarker, color='skyblue',s=100)
+        self._draw_uncert_msg(msg,axs)
         self.logger.add_fig(fig)
 
     def EVENT_and_hub_received_exemplars_msg(self, ID, from_left_child, msg):
@@ -81,6 +85,50 @@ class PropVisualiser:
 
     def EVENT_and_hub_failed(self, ID):
         self.logger.add_text("AND-hub failed: " + str(ID))
+
+######## EVENTS OF I HUB #########################################
+    def EVENT_i_hub_run(self, ID, uncertainty_msg, exemplars_msg):
+        self.logger.add_text("I-hub RUNNED: " +str(ID))
+        pic = globs.pic
+        fig, axs = plt.subplots(ncols=2,figsize=(18, 12), dpi=80)
+        axs[0].imshow(pic, cmap='gray_r')
+        axs[0].set_title('incoming uncertainty:')
+        self._draw_uncert_msg(uncertainty_msg, axs[0])
+
+        axs[1].imshow(pic, cmap='gray_r')
+        axs[1].set_title('outcoming exemplars:')
+        self._draw_many_prog_examples(exemplars_msg.exemplars, axs[1])
+
+        self.logger.add_fig(fig)
+
+    ######## EVENTS OF RW HUB #########################################
+    def EVENT_rw_hub_failed(self, ID):
+        self.logger.add_text("rw hub "+ str(ID) + "  failed...")
+
+    def EVENT_rw_hub_sent_uncertainty_to_child(self, ID, uncert_msg):
+        self.logger.add_text("rw hub "+str(ID)+" sent msg to child:")
+        pic = globs.pic
+        fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
+        axs.imshow(pic, cmap='gray_r')
+        axs.set_title('uncert to child of rw:')
+        self._draw_uncert_msg(uncert_msg, axs)
+        self.logger.add_fig(fig)
+
+    def EVENT_rw_hub_obtained_exemplars_from_child(self, ID, exemplars_msg):
+        self.logger.add_text("rw hub " + str(ID) + " obtained exemplars from child:")
+        pic = globs.pic
+        fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
+        axs.imshow(pic, cmap='gray_r')
+        axs.set_title('exemplars from child to rw:')
+        self._draw_many_prog_examples(exemplars_msg.exemplars, axs)
+        self.logger.add_fig(fig)
+
+
+    ######## EVENTS OF OR HUB #########################################
+
+    ######## OTHER EVENTS  ############################################
+    def EVENT_attached_new_hub(self, ID, parent_ID, hub_type_str):
+        self.logger.add_text(str(parent_ID) + "--->" + str(ID) + " ["+ str(hub_type_str)+"]")
 
 VIS = PropVisualiser()
 

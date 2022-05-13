@@ -59,7 +59,7 @@ def propagate_into_andhub_from_child(andhub, msg):
     if andhub.is_runnable(): # вверх
         exemplars = andhub.run()
         msg.exemplars = exemplars
-        VIS.EVENT_and_hub_run(andhub.ID, andhub.left_pre_exemplars, andhub.right_pre_exemplars, exemplars)
+        VIS.EVENT_and_hub_run(andhub.ID, andhub.and_signature.name, andhub.left_pre_exemplars, andhub.right_pre_exemplars, exemplars)
         return andhub.parent, msg
     else: # случай, когда на одном ребенке экземпляры есть, а на другом нет
         if andhub.current_RW_is_left == True:

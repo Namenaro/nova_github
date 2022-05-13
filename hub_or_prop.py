@@ -36,7 +36,7 @@ def propagate_into_orhub_from_parent(orhub, msg):
     orhub.last_condition_msg = copy.deepcopy(msg)
     remap = orhub.get_actual_alternative()
     some_old_eid = remap[remap.keys()[0]]
-    orhub.chid = create_hub_by_eid(some_old_eid, orhub)
+    orhub.child = create_hub_by_eid(some_old_eid, orhub)
     msg.eid = remap[msg.eid]
     return orhub.child, msg
 
