@@ -21,6 +21,12 @@ class PropVisualiser:
         self.file_name = 'test'
         self.logger = HtmlLogger(self.file_name)
 
+        # флаги-настройки - события каких хабов логировать?
+        self.FLAG_and_disabled = True
+        self.FLAG_i_disabled = True
+        self.FLAG_rw_disabled = True
+        self.FLAG_or_disabled = False
+
     def close(self):
         self.logger.close()
         print("visual log of propagation is saved to file: " + self.file_name + ".html")
@@ -46,6 +52,8 @@ class PropVisualiser:
 
 ######## EVENTS OF AND HUB #########################################
     def EVENT_and_hub_run(self, ID, siganture_name, left_pre_exemplars, right_pre_exemplars, exemplars):
+        if self.FLAG_and_disabled:
+            return
         self.logger.add_text("AND-hub RUNNED: " +str(ID) + " , signature: " + str(siganture_name))
         pic = globs.pic
         fig, axs = plt.subplots(ncols=3,figsize=(18, 6), dpi=80)
@@ -64,6 +72,8 @@ class PropVisualiser:
         self.logger.add_fig(fig)
 
     def EVENT_and_hub_received_incertainty_msg(self, ID, msg):
+        if self.FLAG_and_disabled:
+            return
         self.logger.add_text("AND-hub obtained uncert msg: " + str(ID))
         pic = globs.pic
         fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
@@ -73,6 +83,8 @@ class PropVisualiser:
         self.logger.add_fig(fig)
 
     def EVENT_and_hub_received_exemplars_msg(self, ID, from_left_child, msg):
+        if self.FLAG_and_disabled:
+            return
         source = "from left"
         if from_left_child is False:
             source = "from right"
@@ -84,10 +96,14 @@ class PropVisualiser:
         self.logger.add_fig(fig)
 
     def EVENT_and_hub_failed(self, ID):
+        if self.FLAG_and_disabled:
+            return
         self.logger.add_text("AND-hub failed: " + str(ID))
 
 ######## EVENTS OF I HUB #########################################
     def EVENT_i_hub_run(self, ID, uncertainty_msg, exemplars_msg):
+        if self.FLAG_i_disabled:
+            return
         self.logger.add_text("I-hub RUNNED: " +str(ID))
         pic = globs.pic
         fig, axs = plt.subplots(ncols=2,figsize=(18, 12), dpi=80)
@@ -103,9 +119,13 @@ class PropVisualiser:
 
     ######## EVENTS OF RW HUB #########################################
     def EVENT_rw_hub_failed(self, ID):
+        if self.FLAG_rw_disabled:
+            return
         self.logger.add_text("RW-hub " + str(ID) + " failed...")
 
     def EVENT_rw_hub_sent_uncertainty_to_child(self, ID, uncert_msg):
+        if self.FLAG_rw_disabled:
+            return
         self.logger.add_text("RW-hub "+str(ID)+" sent msg to child:")
         pic = globs.pic
         fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
@@ -115,6 +135,8 @@ class PropVisualiser:
         self.logger.add_fig(fig)
 
     def EVENT_rw_hub_obtained_exemplars_from_child(self, ID, exemplars_msg):
+        if self.FLAG_rw_disabled:
+            return
         self.logger.add_text("RW-hub " + str(ID) + " obtained exemplars from child:")
         pic = globs.pic
         fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
@@ -126,12 +148,18 @@ class PropVisualiser:
 
     ######## EVENTS OF OR HUB #########################################
     def EVENT_or_hub_removes_alternative(self, ID, alternative_to_remove):
+        if self.FLAG_or_disabled:
+            return
         self.logger.add_text("OR-hub " + str(ID) + " removes alterantive " + str(alternative_to_remove))
 
     def EVENT_or_hub_failed(self, ID):
+        if self.FLAG_or_disabled:
+            return
         self.logger.add_text("OR-hub " + str(ID) + " failed...")
 
     def EVENT_or_hub_runned(self, ID, exemplars_before, exemplars_after):
+        if self.FLAG_or_disabled:
+            return
         self.logger.add_text("OR-hub " + str(ID) + " runned:")
         pic = globs.pic
         fig, axs = plt.subplots(ncols=2, figsize=(18, 12), dpi=80)
