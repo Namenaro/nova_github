@@ -22,7 +22,7 @@ class PropVisualiser:
         self.logger = HtmlLogger(self.file_name)
 
         # флаги-настройки - события каких хабов логировать?
-        self.FLAG_and_disabled = True
+        self.FLAG_and_disabled = False
         self.FLAG_i_disabled = True
         self.FLAG_rw_disabled = True
         self.FLAG_or_disabled = False
@@ -54,7 +54,7 @@ class PropVisualiser:
     def EVENT_and_hub_run(self, ID, siganture_name, left_pre_exemplars, right_pre_exemplars, exemplars):
         if self.FLAG_and_disabled:
             return
-        self.logger.add_text("AND-hub RUNNED: " +str(ID) + " , signature: " + str(siganture_name))
+        self.logger.add_text("AND-hub["+str(ID) +"],  signature "+str(siganture_name)+ " RUNNED: ")
         pic = globs.pic
         fig, axs = plt.subplots(ncols=3,figsize=(18, 6), dpi=80)
         axs[0].imshow(pic, cmap='gray_r')
@@ -71,10 +71,10 @@ class PropVisualiser:
 
         self.logger.add_fig(fig)
 
-    def EVENT_and_hub_received_incertainty_msg(self, ID, msg):
+    def EVENT_and_hub_received_incertainty_msg(self, ID, signature_name, msg):
         if self.FLAG_and_disabled:
             return
-        self.logger.add_text("AND-hub obtained uncert msg: " + str(ID))
+        self.logger.add_text("AND-hub[" + str(ID) + "], signature "+ str(signature_name) + " obtained uncert msg: ")
         pic = globs.pic
         fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
         axs.imshow(pic, cmap='gray_r')
@@ -82,13 +82,13 @@ class PropVisualiser:
         self._draw_uncert_msg(msg,axs)
         self.logger.add_fig(fig)
 
-    def EVENT_and_hub_received_exemplars_msg(self, ID, from_left_child, msg):
+    def EVENT_and_hub_received_exemplars_msg(self, ID, signature_name, from_left_child, msg):
         if self.FLAG_and_disabled:
             return
         source = "from left"
         if from_left_child is False:
             source = "from right"
-        self.logger.add_text("AND-hub obtained exemplars msg: " + str(ID) + ", " + source)
+        self.logger.add_text("AND-hub[" + str(ID) + "], signature "+ str(signature_name) +" obtained exemplars msg"  + source)
         pic = globs.pic
         fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
         axs.imshow(pic, cmap='gray_r')

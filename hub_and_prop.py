@@ -23,10 +23,10 @@ from prop_visualiser import VIS
 
 def propagate_into_andhub(andhub, msg):
     if msg.type == TYPE_CONDITION:
-        VIS.EVENT_and_hub_received_incertainty_msg(andhub.ID, msg)
+        VIS.EVENT_and_hub_received_incertainty_msg(andhub.ID, andhub.and_signature.name, msg)
         return propagate_into_andhub_from_parent(andhub, msg)
     if msg.type == TYPE_EXEMPLARS:
-        VIS.EVENT_and_hub_received_exemplars_msg(andhub.ID, andhub.current_RW_is_left, msg)
+        VIS.EVENT_and_hub_received_exemplars_msg(andhub.ID, andhub.and_signature.name, andhub.current_RW_is_left, msg)
         return propagate_into_andhub_from_child(andhub, msg)
 
 def propagate_into_andhub_from_parent(andhub, msg):
