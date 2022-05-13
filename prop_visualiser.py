@@ -23,8 +23,8 @@ class PropVisualiser:
 
         # флаги-настройки - события каких хабов логировать?
         self.FLAG_and_disabled = False
-        self.FLAG_i_disabled = True
-        self.FLAG_rw_disabled = True
+        self.FLAG_i_disabled = False
+        self.FLAG_rw_disabled = False
         self.FLAG_or_disabled = False
 
     def close(self):
@@ -85,10 +85,10 @@ class PropVisualiser:
     def EVENT_and_hub_received_exemplars_msg(self, ID, signature_name, from_left_child, msg):
         if self.FLAG_and_disabled:
             return
-        source = "from left"
+        source = "from LEFT"
         if from_left_child is False:
-            source = "from right"
-        self.logger.add_text("AND-hub[" + str(ID) + "], signature "+ str(signature_name) +" obtained exemplars msg"  + source)
+            source = "from RIGHT"
+        self.logger.add_text("AND-hub[" + str(ID) + "], signature "+ str(signature_name) +", obtained exemplars msg "  + source +":")
         pic = globs.pic
         fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
         axs.imshow(pic, cmap='gray_r')
@@ -98,13 +98,13 @@ class PropVisualiser:
     def EVENT_and_hub_failed(self, ID):
         if self.FLAG_and_disabled:
             return
-        self.logger.add_text("AND-hub failed: " + str(ID))
+        self.logger.add_text("AND-hub["+ str(ID) +"] failed... " )
 
 ######## EVENTS OF I HUB #########################################
     def EVENT_i_hub_run(self, ID, uncertainty_msg, exemplars_msg):
         if self.FLAG_i_disabled:
             return
-        self.logger.add_text("I-hub RUNNED: " +str(ID))
+        self.logger.add_text("I-hub["+str(ID)+"] RUNNED: " )
         pic = globs.pic
         fig, axs = plt.subplots(ncols=2,figsize=(18, 12), dpi=80)
         axs[0].imshow(pic, cmap='gray_r')
@@ -121,12 +121,12 @@ class PropVisualiser:
     def EVENT_rw_hub_failed(self, ID):
         if self.FLAG_rw_disabled:
             return
-        self.logger.add_text("RW-hub " + str(ID) + " failed...")
+        self.logger.add_text("RW-hub[" + str(ID) + "] failed...")
 
     def EVENT_rw_hub_sent_uncertainty_to_child(self, ID, uncert_msg):
         if self.FLAG_rw_disabled:
             return
-        self.logger.add_text("RW-hub "+str(ID)+" sent msg to child:")
+        self.logger.add_text("RW-hub["+str(ID)+"] sent msg to child:")
         pic = globs.pic
         fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
         axs.imshow(pic, cmap='gray_r')
@@ -137,7 +137,7 @@ class PropVisualiser:
     def EVENT_rw_hub_obtained_exemplars_from_child(self, ID, exemplars_msg):
         if self.FLAG_rw_disabled:
             return
-        self.logger.add_text("RW-hub " + str(ID) + " obtained exemplars from child:")
+        self.logger.add_text("RW-hub[" + str(ID) + "] obtained exemplars from child:")
         pic = globs.pic
         fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
         axs.imshow(pic, cmap='gray_r')
@@ -150,17 +150,17 @@ class PropVisualiser:
     def EVENT_or_hub_removes_alternative(self, ID, alternative_to_remove):
         if self.FLAG_or_disabled:
             return
-        self.logger.add_text("OR-hub " + str(ID) + " removes alterantive " + str(alternative_to_remove))
+        self.logger.add_text("OR-hub[" + str(ID) + "] removes an alternative " + str(alternative_to_remove))
 
     def EVENT_or_hub_failed(self, ID):
         if self.FLAG_or_disabled:
             return
-        self.logger.add_text("OR-hub " + str(ID) + " failed...")
+        self.logger.add_text("OR-hub[" + str(ID) + "] failed...")
 
     def EVENT_or_hub_runned(self, ID, exemplars_before, exemplars_after):
         if self.FLAG_or_disabled:
             return
-        self.logger.add_text("OR-hub " + str(ID) + " runned:")
+        self.logger.add_text("OR-hub[" + str(ID) + "] runned:")
         pic = globs.pic
         fig, axs = plt.subplots(ncols=2, figsize=(18, 12), dpi=80)
         axs[0].imshow(pic, cmap='gray_r')
@@ -175,7 +175,7 @@ class PropVisualiser:
 
     ######## OTHER EVENTS  ############################################
     def EVENT_attached_new_hub(self, ID, parent_ID, hub_type_str):
-        self.logger.add_text(str(parent_ID) + "--->" + str(ID) + " ["+ str(hub_type_str)+"]")
+        self.logger.add_text("["+str(parent_ID)+ "]--->[" + str(ID) + "] type "+ str(hub_type_str)+".")
 
 VIS = PropVisualiser()
 
