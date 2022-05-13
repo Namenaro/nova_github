@@ -128,8 +128,22 @@ class PropVisualiser:
     def EVENT_or_hub_removes_alternative(self, ID, alternative_to_remove):
         self.logger.add_text("OR-hub " + str(ID) + " removes alterantive " + str(alternative_to_remove))
 
-    def EVENT_or_hub_failed(self,ID):
+    def EVENT_or_hub_failed(self, ID):
         self.logger.add_text("OR-hub " + str(ID) + " failed...")
+
+    def EVENT_or_hub_runned(self, ID, exemplars_before, exemplars_after):
+        self.logger.add_text("OR-hub " + str(ID) + " runned:")
+        pic = globs.pic
+        fig, axs = plt.subplots(ncols=2, figsize=(18, 12), dpi=80)
+        axs[0].imshow(pic, cmap='gray_r')
+        axs[0].set_title('incoming exemplars from child:')
+        self._draw_many_prog_examples(exemplars_before, axs[0])
+
+        axs[1].imshow(pic, cmap='gray_r')
+        axs[1].set_title('outcoming exemplars (after OR) to its parent:')
+        self._draw_many_prog_examples(exemplars_after, axs[1])
+
+        self.logger.add_fig(fig)
 
     ######## OTHER EVENTS  ############################################
     def EVENT_attached_new_hub(self, ID, parent_ID, hub_type_str):

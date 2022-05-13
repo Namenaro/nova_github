@@ -59,7 +59,9 @@ def propagate_into_orhub_from_child(orhub, msg):
     # Если же сообщение с экземплярами было валидным, то
     # делаем ремаппинг всех его экземпляров (старого на новое) и пересылаем его родителю
     new_map = orhub.get_actual_alternative()
-    msg.exemplars = remap_exemplars_old_to_new(new_map, msg.exemplars)
+    remapped_exemplars= remap_exemplars_old_to_new(new_map, msg.exemplars)
+    VIS.EVENT_or_hub_runned(orhub.ID, exemplars_before=msg.exemplars, exemplars_after=remapped_exemplars)
+    msg.exemplars = remapped_exemplars
     return orhub.parent, msg
 
 
