@@ -23,7 +23,7 @@ def propagate_step( target, msg):
     return new_target, new_msg
 
 
-def make_propagation( eid, points):
+def make_propagation(eid, points):
     print("start propagation...")
     top_hub = create_hub_by_eid( eid, parent=None)
     target = top_hub

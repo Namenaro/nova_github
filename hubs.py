@@ -28,7 +28,7 @@ class OrHub: # на схеме треугольник
         self.last_condition_msg = None
 
         if parent == None:
-            parent_ID = "no id!"
+            parent_ID = "ROOT"
         else:
             parent_ID = parent.ID
         VIS.EVENT_attached_new_hub(hub_type_str="OR", ID=self.ID, parent_ID=parent_ID)
@@ -39,6 +39,7 @@ class OrHub: # на схеме треугольник
         return True
 
     def remove_current_alternative(self):
+        VIS.EVENT_or_hub_removes_alternative(self.ID, self.alternatives_list[0])
         del self.child
         self.child = None
         self.alternatives_list.pop(0) # удаляем первый элемент списка
@@ -48,7 +49,7 @@ class OrHub: # на схеме треугольник
 
 
 class IHub: # на схеме обведенный кружочек
-    def __init__(self,ID,  i_signature, parent):
+    def __init__(self, ID,  i_signature, parent):
         self.ID = ID
         self.i_signature=i_signature
         self.parent = parent  #  RW or OrHub or None

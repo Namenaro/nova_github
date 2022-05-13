@@ -19,13 +19,15 @@ def show_hardcoded_examples():
     yellows = [img[21][14], img[18][17]]
 
 def exp():
-    #show_hardcoded_examples()
-    points = [Point(13, 15), Point(14, 15)]
-    exemplars = make_propagation(eid=6, points=points)
-    print(exemplars)
+    show_hardcoded_examples()
+    #points = [Point(13, 15), Point(14, 15)] # for 6
+    points = [Point(14, 22), Point(13, 22)]
+    exemplars = make_propagation(eid=19, points=points)
+    print("Result exemplars are " + str(exemplars))
     VIS.close()
+    print("No errors occured")
 
-def exp1():
+def exp1(): # это если хочется, чтобы визуальный лог сохранился даже не смотря на падение кода..
     try:
         exp()
     except:

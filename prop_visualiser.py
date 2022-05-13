@@ -103,10 +103,10 @@ class PropVisualiser:
 
     ######## EVENTS OF RW HUB #########################################
     def EVENT_rw_hub_failed(self, ID):
-        self.logger.add_text("rw hub "+ str(ID) + "  failed...")
+        self.logger.add_text("RW-hub " + str(ID) + " failed...")
 
     def EVENT_rw_hub_sent_uncertainty_to_child(self, ID, uncert_msg):
-        self.logger.add_text("rw hub "+str(ID)+" sent msg to child:")
+        self.logger.add_text("RW-hub "+str(ID)+" sent msg to child:")
         pic = globs.pic
         fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
         axs.imshow(pic, cmap='gray_r')
@@ -115,7 +115,7 @@ class PropVisualiser:
         self.logger.add_fig(fig)
 
     def EVENT_rw_hub_obtained_exemplars_from_child(self, ID, exemplars_msg):
-        self.logger.add_text("rw hub " + str(ID) + " obtained exemplars from child:")
+        self.logger.add_text("RW-hub " + str(ID) + " obtained exemplars from child:")
         pic = globs.pic
         fig, axs = plt.subplots(ncols=1, figsize=(6, 6), dpi=80)
         axs.imshow(pic, cmap='gray_r')
@@ -125,6 +125,11 @@ class PropVisualiser:
 
 
     ######## EVENTS OF OR HUB #########################################
+    def EVENT_or_hub_removes_alternative(self, ID, alternative_to_remove):
+        self.logger.add_text("OR-hub " + str(ID) + " removes alterantive " + str(alternative_to_remove))
+
+    def EVENT_or_hub_failed(self,ID):
+        self.logger.add_text("OR-hub " + str(ID) + " failed...")
 
     ######## OTHER EVENTS  ############################################
     def EVENT_attached_new_hub(self, ID, parent_ID, hub_type_str):

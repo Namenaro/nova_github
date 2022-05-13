@@ -35,31 +35,31 @@ def propagate_into_orhub(orhub, msg):
 def propagate_into_orhub_from_parent(orhub, msg):
     orhub.last_condition_msg = copy.deepcopy(msg)
     remap = orhub.get_actual_alternative()
-    some_old_eid = remap[remap.keys()[0]]
+    some_old_eid = remap[list(remap.keys())[0]]
     orhub.child = create_hub_by_eid(some_old_eid, orhub)
     msg.eid = remap[msg.eid]
     return orhub.child, msg
 
 def propagate_into_orhub_from_child(orhub, msg):
-    if msg.is_failed(): #если текущий ребенок провален,
+    if msg.is_failed(): # если текущий ребенок провален,
         orhub.remove_current_alternative() # то удяляем его и,
         if orhub.is_all_alternatives_checked(): # если больше детей нельзя создать,
-            msg = MsgExemplars([])
+            VIS.EVENT_or_hub_failed(orhub.ID)
             return orhub.parent, msg # то шлем родителю сообщение уже о своем провале
         else:
             #  иначе распространяем ранее запомненное CONDITION-сообщение
             #  в следующую альтернативу (создав под нее ребенка)
             # и подменив в сообщении новый eid на старый по актуальному ремаппингу
-            map = orhub.get_actual_alternative()
-            some_old_eid = map[map.keys()[0]]
+            new_map = orhub.get_actual_alternative()
+            some_old_eid = new_map[list(new_map.keys())[0]]
             orhub.child = create_hub_by_eid(some_old_eid, orhub)
             new_msg = copy.deepcopy(orhub.last_condition_msg)
-            new_msg.eid = map[msg.eid]
+            new_msg.eid = new_map[new_msg.eid]
             return orhub.child, new_msg
     # Если же сообщение с экземплярами было валидным, то
     # делаем ремаппинг всех его экземпляров (старого на новое) и пересылаем его родителю
-    map = orhub.get_actual_alternative()
-    msg.exemplars = remap_exemplars_old_to_new(map, msg.exemplars)
+    new_map = orhub.get_actual_alternative()
+    msg.exemplars = remap_exemplars_old_to_new(new_map, msg.exemplars)
     return orhub.parent, msg
 
 
