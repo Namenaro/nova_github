@@ -6,10 +6,10 @@ from networkx.drawing.nx_pydot import *
 G = nx.DiGraph()
 
 # хабы, пронумерованные уникальными (в дереве) номерами
-and_nodes =[1,7,6,8]
-or_nodes =[4]
-rw_nodes = [2,3,9,10]
-i_nodes = [5,11]
+and_nodes =[1,7,8,22]
+or_nodes =[4,12,15,16,27]
+rw_nodes = [2,3,9,10,13,14,24,25]
+i_nodes = [5,11,6,17,18,19,20,21,23,26,28,29]
 
 # соединяем их в граф - кого к кому крепить стрелками
 G.add_edge(1, 2)
@@ -22,6 +22,24 @@ G.add_edge(4, 8)
 G.add_edge(8, 9)
 G.add_edge(8, 10)
 G.add_edge(10, 11)
+G.add_edge(7, 13)
+G.add_edge(7, 14)
+G.add_edge(13, 12)
+G.add_edge(9, 15)
+G.add_edge(15, 16)
+G.add_edge(15, 17)
+G.add_edge(16, 18)
+G.add_edge(16, 19)
+G.add_edge(16, 20)
+G.add_edge(14, 21)
+G.add_edge(12, 22)
+G.add_edge(12, 23)
+G.add_edge(22, 24)
+G.add_edge(22, 25)
+G.add_edge(25, 26)
+G.add_edge(24, 27)
+G.add_edge(27, 28)
+G.add_edge(27, 29)
 
 # ОТРИСОВКА --------------------------------------
 # стилили рисования разных типов хабов
